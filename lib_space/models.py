@@ -35,7 +35,7 @@ class BorrowedBook(models.Model):
     returned = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.book + ' - ' + self.borrower + ' - ' + self.due_date
+        return self.book.title + ' - ' + self.borrower.username + ' - ' + str(self.due_date)
 
     class Meta:
         verbose_name = 'Borrowed Book'

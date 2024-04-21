@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrow Books</title>
+</head>
+<body>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h1>Borrow Books</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="book">Select a book:</label>
+        <select name="book" id="book">
+            {% for book in books %}
+                <option value="{{ book.id }}">{{ book.title }} by {{ book.author }}</option>
+            {% endfor %}
+        </select>
+        <label for="due_date">Due Date:</label>
+        <input type="date" name="due_date" id="due_date">
+        <button type="submit">Borrow</button>
+    </form>
+</body>
+</html>

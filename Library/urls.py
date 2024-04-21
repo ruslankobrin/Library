@@ -16,7 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from lib_space.views import login_view, logout_view, register_view
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lib_space/', include('lib_space.urls')),
+    url(r'^login/', login_view, name='login'),
+    url(r'^logout/', logout_view, name='logout'),
+    url(r'^register/', register_view, name='register'),
 ]
