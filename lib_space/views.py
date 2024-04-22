@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -77,3 +79,32 @@ def borrow_books(request):
     else:
         books = Book.objects.all()
         return render(request, 'borrow_books.html', {'books': books})
+
+
+def manage_borrowed_books(request):
+    current_date = date.today()
+    borrowed_books = BorrowedBook.objects.all()
+
+    overdue_books = []
+    due_soon_books = []
+    normal_books = []
+
+    for book in borrowed_books:
+        if not book.returned:
+            if book.due_date < current_date:
+                overdue_books.append(book)
+            elif current_date < book.due_date <= current_date + timedelta(days=7):
+                due_soon_books.append(book)
+            else:
+                normal_books.append(book)
+
+    return render(
+        request,
+        'manage_borrowed_books.html',
+        {
+            'overdue_books': overdue_books,
+            'due_soon_books': due_soon_books,
+            'normal_books': normal_books,
+            'current_date': current_date
+        }
+    )

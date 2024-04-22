@@ -1,0 +1,87 @@
+<!-- manage_borrowed_books.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Borrowed Books</title>
+    <style>
+        .overdue {
+            background-color: #FFCCCC; /* Червоний колір для протермінованих книг */
+        }
+
+        .due_soon {
+            background-color: #FFFF99; /* Жовтий колір для книг, у яких залишився тиждень до терміну повернення */
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Borrowed Books</h1>
+
+    <h2>Overdue Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Borrower</th>
+                <th>Due Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in overdue_books %}
+            <tr class="overdue">
+                <td>{{ book.book.title }}</td>
+                <td>{{ book.borrower.username }}</td>
+                <td>{{ book.due_date }}</td>
+                <td>{{ book.returned }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Due Soon Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Borrower</th>
+                <th>Due Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in due_soon_books %}
+            <tr class="due_soon">
+                <td>{{ book.book.title }}</td>
+                <td>{{ book.borrower.username }}</td>
+                <td>{{ book.due_date }}</td>
+                <td>{{ book.returned }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Normal Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Borrower</th>
+                <th>Due Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in normal_books %}
+            <tr>
+                <td>{{ book.book.title }}</td>
+                <td>{{ book.borrower.username }}</td>
+                <td>{{ book.due_date }}</td>
+                <td>{{ book.returned }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
