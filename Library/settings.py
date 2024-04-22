@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'Library.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'bobdb',
-        'USER': 'bob',
+        'NAME': 'libdb',
+        'USER': 'user',
         'PASSWORD': 'P@$$w0rd',
         'HOST': '127.0.0.1',
         'PORT': '5432',
