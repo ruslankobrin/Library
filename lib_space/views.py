@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
 from .models import Book, BorrowedBook
 
 
@@ -42,17 +43,20 @@ def search_books(request):
     if request.method == 'GET':
         author = request.GET.get('author')
         title = request.GET.get('title')
+        borrower = request.GET.get('borrower')
 
-        if author and title:
-            books = Book.objects.filter(author__name__icontains=author, title__icontains=title)
-        elif author:
-            books = Book.objects.filter(author__name__icontains=author)
-        elif title:
-            books = Book.objects.filter(title__icontains=title)
-        else:
-            books = []
+        borrowed_books = BorrowedBook.objects.select_related("borrower")
+        if author:
+            borrowed_books = borrowed_books.filter(book__author__name__icontains=author)
+        if title:
+            borrowed_books = borrowed_books.filter(book__title__icontains=title)
+        if borrower:
+            borrowed_books = borrowed_books.filter(borrower__username__icontains=borrower)
 
-        return render(request, 'search_books.html', {'books': books})
+        books_with_borrowers = [{'title': borrowed_book.book.title, 'author': borrowed_book.book.author,
+                                 'borrower': borrowed_book.borrower.username} for borrowed_book in borrowed_books]
+
+        return render(request, 'search_books.html', {'books_with_borrowers': books_with_borrowers})
 
 
 def borrow_books(request):
