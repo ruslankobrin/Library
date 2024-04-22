@@ -24,6 +24,7 @@
             <tr>
                 <th>Book Title</th>
                 <th>Borrower</th>
+                <th>Contact</th>
                 <th>Due Date</th>
                 <th>Returned</th>
             </tr>
@@ -33,6 +34,7 @@
             <tr class="overdue">
                 <td>{{ book.book.title }}</td>
                 <td>{{ book.borrower.username }}</td>
+                <td>{{ book.borrower.email }}</td>
                 <td>{{ book.due_date }}</td>
                 <td>{{ book.returned }}</td>
             </tr>
