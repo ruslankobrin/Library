@@ -45,7 +45,7 @@ def search_books(request):
         title = request.GET.get('title')
         borrower = request.GET.get('borrower')
 
-        borrowed_books = BorrowedBook.objects.select_related("borrower")
+        borrowed_books = BorrowedBook.objects.select_related("book", "borrower")
         if author:
             borrowed_books = borrowed_books.filter(book__author__name__icontains=author)
         if title:
@@ -87,7 +87,7 @@ def borrow_books(request):
 
 def manage_borrowed_books(request):
     current_date = date.today()
-    borrowed_books = BorrowedBook.objects.all()
+    borrowed_books = BorrowedBook.objects.select_related('book', 'borrower')
 
     overdue_books = []
     due_soon_books = []
